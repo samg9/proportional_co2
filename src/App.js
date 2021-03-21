@@ -19,7 +19,9 @@ class App extends React.Component {
         world.objects.countries.geometries.findIndex(d => d.properties.ISO_A2 === 'AQ'),
         
       );
-      const colorScale = d3.scaleOrdinal([]);
+
+      const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+      console.log("incomgin color sclae", d3.scaleLinear() );
       console.log("incomgin cartogram", Cartogram())
       console.log("incomgin world id",document.getElementById('world'));
           Cartogram()
@@ -28,7 +30,7 @@ class App extends React.Component {
               .iterations(120)
               .value(({ properties }) => properties.POP_EST)
               .color(({ properties: { ISO_A2 } }) => colorScale(ISO_A2))
-              // .label(({ properties: p }) => `Population of ${p.NAME} (${p.ISO_A2})`)
+              .label(({ properties: p }) => `Population of ${p.NAME} (${p.ISO_A2})`)
               .valFormatter(d3.format(".3s"))
               .onClick(d => console.info(d))
               (node);
