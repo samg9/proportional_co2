@@ -2,11 +2,14 @@ import React from 'react';
 import * as d3 from 'd3';
 import Cartogram from 'cartogram-chart';
 class App extends React.Component {
+  getGDPPerCapita({ properties: p }) {
+    return p.GDP_MD_EST * 1e6 / p.POP_EST;
+}
  constructor(props){
     super(props);
     this.myRef = React.createRef(); 
 
-    this.dataset = [100, 200, 300, 400, 500];
+    // this.dataset = [100, 200, 300, 400, 500];
  }
  componentDidMount(){
     console.log(this.myRef);
@@ -16,23 +19,21 @@ class App extends React.Component {
     d3.json('./ne_110m_admin_0_countries.json').then(world => {
       console.log(world.objects);
       world.objects.countries.geometries.splice(
-        world.objects.countries.geometries.findIndex(d => d.properties.ISO_A2 === 'AQ'),
-        
-      );
+                world.objects.countries.geometries.findIndex(d => d.properties.ISO_A2 === 'AQ'),
+                1
+            );
 
-      const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-      console.log("incomgin color sclae", d3.scaleLinear() );
-      console.log("incomgin cartogram", Cartogram())
-      console.log("incomgin world id",document.getElementById('world'));
-          Cartogram()
-              .topoJson(world)
-              .topoObjectName('countries')
-              .iterations(120)
-              .value(({ properties }) => properties.POP_EST)
-              .color(({ properties: { ISO_A2 } }) => colorScale(ISO_A2))
-              .label(({ properties: p }) => `Population of ${p.NAME} (${p.ISO_A2})`)
-              .valFormatter(d3.format(".3s"))
-              .onClick(d => console.info(d))
+            const colorScale = d3.scaleSequential(d3.interpolatePlasma)
+                .domain([0, Math.max(...world.objects.countries.geometries.map(this.getGDPPerCapita))]);
+
+            Cartogram()
+                .topoJson(world)
+                .topoObjectName('countries')
+                .value(this.getGDPPerCapita)
+                .color(f => colorScale(this.getGDPPerCapita(f)))
+                .label(({ properties: p }) => `GDP of ${p.NAME} (${p.ISO_A2})`)
+                .units(' per capita')
+                .valFormatter(d3.format('$,.0f'))
               (node);
     }).catch((err)=> console.log("incomgin ERr",err));
     // d3.select(this.myRef.current)
