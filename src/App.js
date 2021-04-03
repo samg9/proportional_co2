@@ -1,51 +1,49 @@
 import React from 'react';
-import * as d3 from 'd3';
-import Cartogram from 'cartogram-chart';
+import Slider from './components/Slider.js';
+import World from './components/World.js';
+
+const initialState = {
+  year: 1809
+}
+
 class App extends React.Component {
+  constructor(props){
+    super(props);
+    // this.myRef = React.createRef();
+    this.state = initialState;
+ }
+  onYearChange = (event) => {
+    console.log("calling year year chage", event.target.value);
+    this.setState({ year: event.target.value });
+    // this.scrollToBottom();
+    setTimeout(function(){ window.scrollTo({
+      top: document.body.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    })}
+    , 850);
+  }
+  // scrollToBottom() {
+  //   console.log(this.myRef);
+  //   this.myRef.scrollIntoView({ behavior: 'smooth' });
+  // }
   getGDPPerCapita({ properties: p }) {
     // console.log(p,p.POP_EST, p.GDP_MD_EST );
-    var v = 0; 
-    try {
-      v = p[1999].co2*1e6;
-    }catch(err){
-      console.log(err)
-      v = 1e6;
-    }
-    return v;
-}
- constructor(props){
-    super(props);
-    this.myRef = React.createRef(); 
-
-    // this.dataset = [100, 200, 300, 400, 500];
- }
- componentDidMount(){
-    console.log(this.myRef);
-    const node  = this.myRef.current;
-    d3.json('./countries_with_co2.json').then(world => {
-      world.objects.countries.geometries.splice(
-        world.objects.countries.geometries.findIndex(d => d.properties.ISO_A2 === 'AQ'), //remove antartica?
-        1
-      );
-
-            const colorScale = d3.scaleSequential(d3.interpolatePlasma)
-                .domain([0, Math.max(...world.objects.countries.geometries.map(this.getGDPPerCapita))]);
-
-            Cartogram()
-                .topoJson(world)
-                .topoObjectName('countries')
-                .value(this.getGDPPerCapita)
-                .color(f => colorScale(this.getGDPPerCapita(f)))
-                .label(({ properties: p }) => `GDP of ${p.NAME} (${p.ISO_A2})`)
-                .units(' per capita')
-                .valFormatter(d3.format('$,.0f'))
-              (node);
-    }).catch((err)=> console.log("incomgin ERr",err));
- }
+    var v = 0;
+    return p.GDP_MD_EST * 1e6 / p.POP_EST;
+    // return v;
+  }
  render(){
   return (
     <div ref={this.myRef}>
-      <div className="world"></div>
+      
+      <h3 style={{textAlign: 'center'}}>Countries scaled by co2 emission</h3>
+      <World getGDPPerCapita={this.getGDPPerCapita} currentYear={this.state.year}/>
+      
+      <div style={{marginTop: '-8%'}}>
+      <h5 style={{textAlign: 'center'}}>Year: {this.state.year}</h5>
+      <Slider onYearChange={this.onYearChange} currentYear={this.state.year}/>
+      </div>
     </div>
   );
  }
