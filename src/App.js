@@ -37,11 +37,11 @@ class App extends React.Component {
   return (
     <div ref={this.myRef}>
       
-      <h3 style={{textAlign: 'center'}}>Countries scaled by co2 emission</h3>
+      <div><h3 style={{textAlign: 'center', marginBottom:'-10%', marginLeft: '80px',backgroundColor: 'white'}}>Countries scaled by co2 emission</h3></div>
       <World getGDPPerCapita={this.getGDPPerCapita} currentYear={this.state.year}/>
       
       <div style={{marginTop: '-8%'}}>
-      <h5 style={{textAlign: 'center'}}>Year: {this.state.year}</h5>
+      <h5 style={{textAlign: 'center',marginTop: '-12%'}}>Year: {this.state.year}</h5>
       <Slider onYearChange={this.onYearChange} currentYear={this.state.year}/>
       </div>
     </div>

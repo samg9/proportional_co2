@@ -3,12 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-console.log("YEEE3333t");
-window.scrollTo({
-  top: document.body.scrollHeight,
-  left: 0,
-  behavior: 'smooth'
-});
 ReactDOM.render(
   <React.StrictMode>
     <App />

@@ -20,7 +20,7 @@ export default class World extends Component {
         
         
         try{
-            if(p[year].co2===NaN || isNaN(p[year].co2*10)|| p[year].co2*10 === null || p[year].co2*10 === "undefined" || p[year].co2*10===NaN){
+            if(p.ISO_A2 === "FK" || p.ISO_A2 === "TF" || p.ISO_A2 === "NC" || p[year].co2===NaN || isNaN(p[year].co2*1)|| p[year].co2*1 === null || p[year].co2*1 === "undefined" || p[year].co2*1===NaN){
                 console.log("No co2 data for year", year, "country:", p.NAME);
                 return 1;
             }else{
@@ -35,21 +35,21 @@ export default class World extends Component {
 
     renderMap(){
         const node  = this.myRef.current;
+        
         d3.json('./countries_with_co2.json').then(world => {
             world.objects.countries.geometries.splice(
                 world.objects.countries.geometries.findIndex(d => d.properties.ISO_A2 === 'AQ'), //remove antartica?
                 1
             );
             console.log("incoming world", world);
-            d3.select(node).on("click", function(){
-                console.log("clicked on this",this)
-            })
             
             const colorScale = d3.scaleSequential(d3.interpolatePlasma)
                                 .domain([0, Math.max(...world.objects.countries.geometries.map(this.getGDP))]);
             const currYear = this.props.currentYear;
             d3.select("#volume").append('svg');
                 Cartogram()
+                    // .width(2500)
+                    // .height(250)
                     .topoJson(world)
                     .topoObjectName('countries')
                     .value(p => this.getYearCo2(p,this.props.year))
@@ -58,10 +58,15 @@ export default class World extends Component {
                     .units(' Million tons')
                     .valFormatter(d3.format('.0f'))
                     (node)
+            
             d3.select(node).append("text")      // text label for the x axis
             .style("text-anchor", "middle")
-            .style("margin-left","48.5%")
-            .style("margin-bottom","5%")
+            .style("margin-left","38.5%")
+            .style("padding-top","-100%")
+            .style("padding-left", "10%")
+            .style("padding-right", "10%")
+            .style("border", "2px solid black")
+            .style("background-clip", "content-box")
             .text(`${this.props.currentYear}`);
             
         }).catch((err)=> console.log("incomgin ERr",err));
