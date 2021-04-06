@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/proportioanl_co2/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/proportioanl_co2/static/js/main.61a13528.chunk.js",
+    "main.js.map": "/proportioanl_co2/static/js/main.61a13528.chunk.js.map",
+    "runtime-main.js": "/proportioanl_co2/static/js/runtime-main.c5072024.js",
+    "runtime-main.js.map": "/proportioanl_co2/static/js/runtime-main.c5072024.js.map",
+    "static/js/2.2f0dbab1.chunk.js": "/proportioanl_co2/static/js/2.2f0dbab1.chunk.js",
+    "static/js/2.2f0dbab1.chunk.js.map": "/proportioanl_co2/static/js/2.2f0dbab1.chunk.js.map",
+    "static/js/3.caa50a2d.chunk.js": "/proportioanl_co2/static/js/3.caa50a2d.chunk.js",
+    "static/js/3.caa50a2d.chunk.js.map": "/proportioanl_co2/static/js/3.caa50a2d.chunk.js.map",
+    "index.html": "/proportioanl_co2/index.html",
+    "static/css/main.6dea0f05.chunk.css.map": "/proportioanl_co2/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.2f0dbab1.chunk.js.LICENSE.txt": "/proportioanl_co2/static/js/2.2f0dbab1.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c5072024.js",
+    "static/js/2.2f0dbab1.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.61a13528.chunk.js"
+  ]
+}
