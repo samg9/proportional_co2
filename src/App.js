@@ -9,13 +9,12 @@ const initialState = {
 class App extends React.Component {
   constructor(props){
     super(props);
-    // this.myRef = React.createRef();
     this.state = initialState;
  }
   onYearChange = (event) => {
-    console.log("calling year year chage", event.target.value);
+   
     this.setState({ year: event.target.value });
-    // this.scrollToBottom();
+
     setTimeout(function(){ window.scrollTo({
       top: document.body.scrollHeight,
       left: 0,
@@ -23,15 +22,9 @@ class App extends React.Component {
     })}
     , 850);
   }
-  // scrollToBottom() {
-  //   console.log(this.myRef);
-  //   this.myRef.scrollIntoView({ behavior: 'smooth' });
-  // }
+  
   getGDPPerCapita({ properties: p }) {
-    // console.log(p,p.POP_EST, p.GDP_MD_EST );
-    var v = 0;
     return p.GDP_MD_EST * 1e6 / p.POP_EST;
-    // return v;
   }
  render(){
   return (

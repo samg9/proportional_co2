@@ -56,7 +56,6 @@
         //
 
         function genVals(val) {
-            console.log("gggeeem",val);
             ccData = Object.assign(...world.objects.countries.geometries
                 .map(({ properties: { ISO_A2 } }) => ({ [ISO_A2]: Math.random() }))
             );
@@ -64,8 +63,6 @@
 
         function render(val) {
 
-            console.log("val from render:",val);
-            console.log(cartogram)
             cartogram.iterations(controls.Iterations);
         }
     });

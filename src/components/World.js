@@ -18,16 +18,12 @@ export default class World extends Component {
             year = this.props.currentYear;
         }
         
-        
         try{
             if(p.ISO_A2 === "FK" || p.ISO_A2 === "TF" || p.ISO_A2 === "NC" || p[year].co2===NaN || isNaN(p[year].co2*1)|| p[year].co2*1 === null || p[year].co2*1 === "undefined" || p[year].co2*1===NaN){
-                console.log("No co2 data for year", year, "country:", p.NAME);
                 return 1;
             }else{
                 return p[year].co2*1;
             }
-            
-            
         }catch (err){
             return 1;
         }
@@ -41,15 +37,10 @@ export default class World extends Component {
                 world.objects.countries.geometries.findIndex(d => d.properties.ISO_A2 === 'AQ'), //remove antartica?
                 1
             );
-            console.log("incoming world", world);
             
             const colorScale = d3.scaleSequential(d3.interpolatePlasma)
                                 .domain([0, Math.max(...world.objects.countries.geometries.map(this.getGDP))]);
-            const currYear = this.props.currentYear;
-            d3.select("#volume").append('svg');
                 Cartogram()
-                    // .width(2500)
-                    // .height(250)
                     .topoJson(world)
                     .topoObjectName('countries')
                     .value(p => this.getYearCo2(p,this.props.year))
@@ -69,7 +60,7 @@ export default class World extends Component {
             .style("background-clip", "content-box")
             .text(`${this.props.currentYear}`);
             
-        }).catch((err)=> console.log("incomgin ERr",err));
+        }).catch((err)=> console.log("Error:",err));
     }
     
     
